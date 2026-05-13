@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background: #b8d5d7;
+  text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+nav {
+  padding: 10px 15px;
+  background: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+}
+
+nav a {
+  color: #444;
+  text-decoration: none;
+}
+
+nav a.active {
+  text-decoration: underline;
+}
+
+.ticket-wrap {
+  margin: 15px;
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #999;
+  background: white;
+}
+
+.ticket-table td {
+  border: 1px solid #bbb;
+  padding: 12px;
+  vertical-align: top;
+}
+
+.lbl-col {
+  width: 15%;
+  font-weight: bold;
+  text-align: center;
+}
+
+.name-col {
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.status-col {
+  width: 30%;
+}
+
+.time-col {
+  width: 25%;
+  font-size: 0.85em;
+}
+
+.msg-entry {
+  background: #fafafa;
+}
+
+.msg-time {
+  font-size: 0.8em;
+}
+
+.reply-section {
+  margin: 30px 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.reply-inner {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+textarea {
+  width: 460px;
+  height: 95px;
+  border: 2px solid #555;
+  border-radius: 8px;
+  padding: 12px;
+  resize: none;
+}
+
+button[type="submit"] {
+  width: 90px;
+  height: 45px;
+  border: 2px solid #333;
+  background: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+#saveBtn {
+  width: 70px;
+  height: 32px;
+  font-size: 12px;
+  margin-top: -20px;
+}

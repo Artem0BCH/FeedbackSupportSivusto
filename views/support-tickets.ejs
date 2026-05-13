@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/inc/style.css">
+  <title>Support Tickets</title>
+</head>
+
+<body>
+  <header>
+    <h1><b>Tuki- ja palauteportaali</b></h1>
+
+    <div id="loginBox" class="popup">
+      <form class="popup-form" method="POST" action="/login">
+        <div class="form-wrap">
+          <span onclick="hideLoginBox()" id="closeBtn">X</span>
+          <input type="hidden" name="returnTo" value="/support-tickets">
+          <input type="text" placeholder="Enter Email*" name="uname" required>
+          <input type="password" placeholder="Enter Password" name="password">
+          <input type="text" placeholder="Enter your ID*" name="id" required>
+          <button type="submit" id="loginSubmit">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <% if (user) { %>
+    <a href="/logout"><button id="logoutBtn">Logout</button></a>
+    <% } else { %>
+    <button onclick="showLoginBox()" id="openLoginBtn">Login</button>
+    <% } %>
+    <% if (session && session.loginMessage) { %>
+    <p style="color: rgb(223, 33, 33); text-align: center; text-shadow:
+    -1px -1px 0 #dd212110,
+    1px -1px 0 #dd212110,
+    -1px 1px 0 #dd212110,
+    1px 1px 0 #dd212110;"><b><%= session.loginMessage %></b></p>
+    <% session.loginMessage = null; %>
+    <% } %>
+  </header>
+
+  <nav>
+    <div class="nav-start">
+      <a href="/customers-users">Customers & Users</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/support-tickets"><b>Support Tickets</b></a>
+    </div>
+
+    <div class="nav-end"></div>
+  </nav>
+
+  <table>
+    <tr>
+      <th>Open</th>
+      <th>Status</th>
+      <th>ID</th>
+      <th>Arrived</th>
+      <th>Customer</th>
+      <th>Email</th>
+      <th>Description</th>
+      <th>Processed</th>
+    </tr>
+
+    <% for (const row of rows) { %>
+    <tr>
+      <td><a href="/ticket?id=<%= row.id %>">Open</a></td>
+      <td><%= row.status %></td>
+      <td><%= row.customer_id %></td>
+      <td><%= row.arrived %></td>
+      <td><%= row.name %></td>
+      <td><%= row.email %></td>
+      <td><%= row.description %></td>
+      <td><%= row.handled %></td>
+    </tr>
+    <% } %>
+  </table>
+
+  <script src="/login.js"></script>
+</body>
+
+</html>

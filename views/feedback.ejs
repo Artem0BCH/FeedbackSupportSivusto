@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/inc/style.css">
+  <title>Feedback</title>
+</head>
+
+<body>
+  <header>
+    <h1><b>Tuki- ja palauteportaali</b></h1>
+
+    <div id="loginBox" class="popup">
+      <form class="popup-form" method="POST" action="/login">
+        <div class="form-wrap">
+          <span onclick="hideLoginBox()" id="closeBtn">X</span>
+          <input type="hidden" name="returnTo" value="/feedback">
+          <input type="text" placeholder="Enter Email*" name="uname" required>
+          <input type="password" placeholder="Enter Password" name="password">
+          <input type="text" placeholder="Enter your ID*" name="id" required>
+          <button type="submit" id="loginSubmit">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <% if (user) { %>
+    <a href="/logout"><button id="logoutBtn">Logout</button></a>
+    <% } else { %>
+    <button onclick="showLoginBox()" id="openLoginBtn">Login</button>
+    <% } %>
+    <% if (session && session.loginMessage) { %>
+    <p style="color: rgb(223, 33, 33); text-align: center; text-shadow:
+    -1px -1px 0 #dd212110,
+    1px -1px 0 #dd212110,
+    -1px 1px 0 #dd212110,
+    1px 1px 0 #dd212110;"><b><%= session.loginMessage %></b></p>
+    <% session.loginMessage = null; %>
+    <% } %>
+  </header>
+
+  <nav>
+    <div class="nav-start">
+      <a href="/customers-users">Customers & Users</a>
+      <a href="/feedback"><b>Feedback</b></a>
+      <a href="/support-tickets">Support Tickets</a>
+    </div>
+  </nav>
+
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>From</th>
+      <th>Feedback</th>
+    </tr>
+    <% for (const row of rows) { %>
+    <tr>
+      <td><%= row.arrived %></td>
+      <td><%= row.guest_name %> (<%= row.guest_email %>)</td>
+      <td><%= row.feedback %></td>
+    </tr>
+    <% } %>
+  </table>
+
+  <script src="/login.js"></script>
+</body>
+
+</html>

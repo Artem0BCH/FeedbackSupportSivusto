@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/inc/ticketStyle.css">
+  <title>Support Ticket</title>
+</head>
+<body>
+
+<header>
+  <h1>Tuki- ja palauteportaali</h1>
+</header>
+
+<nav>
+  <a href="/support-tickets" class="active">Tukipyynnöt</a>
+</nav>
+
+<div class="ticket-wrap">
+  <table class="ticket-table">
+    <tr>
+      <td class="lbl-col">ID: <%= ticket.id %></td>
+      <td colspan="2" class="name-col"><strong><%= ticket.name %></strong></td>
+    </tr>
+    <tr>
+      <td class="lbl-col">Tila</td>
+      <td class="status-col">
+        <form method="POST" action="/update-status">
+          <input type="hidden" name="ticket_id" value="<%= ticket.id %>">
+          <select name="status">
+            <option value="1" <%= ticket.status == "open" ? "selected" : "" %>>Open</option>
+            <option value="2" <%= ticket.status == "working on" ? "selected" : "" %>>Working on</option>
+            <option value="3" <%= ticket.status == "done" ? "selected" : "" %>>Done</option>
+            <option value="4" <%= ticket.status == "closed" ? "selected" : "" %>>Closed</option>
+          </select>
+          <button id="saveBtn" type="submit">Tallenna</button>
+        </form>
+      </td>
+      <td class="time-col">
+        Avattu: <%= ticket.arrived %><br>
+        Käsitelty:
+      </td>
+    </tr>
+    <tr>
+      <td class="lbl-col">Kuvaus</td>
+      <td colspan="2" class="cell-desc"><%= ticket.description %></td>
+    </tr>
+
+    <% for (const msg of messages) { %>
+    <tr class="msg-entry">
+      <td class="msg-time"><%= msg.created_at %></td>
+      <td class="msg-user"><strong><%= msg.email %></strong></td>
+      <td class="msg-body"><%= msg.body %></td>
+    </tr>
+    <% } %>
+  </table>
+</div>
+
+<div class="reply-section">
+  <form method="POST" action="/reply">
+    <input type="hidden" name="ticket_id" value="<%= ticket.id %>">
+    <div class="reply-inner">
+      <textarea name="message" required placeholder="Kirjoita vastaus..."></textarea>
+      <button type="submit">&#8594;</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
