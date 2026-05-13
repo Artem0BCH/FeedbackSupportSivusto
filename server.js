@@ -8,8 +8,8 @@ import bcrypt from "bcrypt";
 
 const app = express();
 
-var serverHost = config.host;
-var serverPort = config.port;
+let serverHost = config.host;
+let serverPort = config.port;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,7 +51,7 @@ app.get("/", (req, res) => {
 
 app.get("/feedback", async (req, res) => {
   try {
-    var feedbackData = await db.getFeedback();
+    let feedbackData = await db.getFeedback();
     res.render("feedback", {
       rows: feedbackData,
       user: req.session.user || null,
@@ -89,7 +89,7 @@ app.get("/support-tickets", loginRequired, async (req, res) => {
 });
 
 app.get("/ticket", loginRequired, async (req, res) => {
-  var ticketId = req.query.id;
+  let ticketId = req.query.id;
   const ticket = await db.getTicketById(ticketId);
   let messages = await db.getMessagesByTicket(ticketId);
   console.log(messages);
@@ -97,8 +97,8 @@ app.get("/ticket", loginRequired, async (req, res) => {
 });
 
 app.post("/reply", async (req, res) => {
-  var ticketId = req.body.ticket_id;
-  var msg = req.body.message;
+  let ticketId = req.body.ticket_id;
+  let msg = req.body.message;
   await db.addMessage(ticketId, msg, req.session.user.id);
   res.redirect("/ticket?id=" + ticketId);
 });
@@ -114,7 +114,7 @@ app.post("/login", async (req, res) => {
   const loginVal = req.body.uname || req.body.id;
   const password = req.body.password;
   const returnTo = req.body.returnTo;
-  var user = await db.getUserByLogin(loginVal);
+  let user = await db.getUserByLogin(loginVal);
   if (!user) {
     req.session.loginMessage = "User not found.";
     return res.redirect(returnTo || "/feedback");
@@ -135,7 +135,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  var goBack = req.headers.referer;
+  let goBack = req.headers.referer;
   req.session.destroy(function (err) {
     if (err) {
       return res.send("Logout epäonnistui");

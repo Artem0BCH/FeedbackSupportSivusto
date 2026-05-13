@@ -1,7 +1,7 @@
 import mysql from "mysql2/promise";
 import dbconfig from "./dbconfig.json" with { type: "json" };
 
-var dbPool = mysql.createPool(dbconfig);
+let dbPool = mysql.createPool(dbconfig);
 
 const openConn = async () => {
   try {
@@ -51,7 +51,7 @@ const getCustomersUsers = async () => {
 
 const getSupportTickets = async () => {
   try {
-    var conn = await openConn();
+    let conn = await openConn();
     const query = `
         SELECT 
             support_ticket.id,
@@ -78,7 +78,7 @@ const getSupportTickets = async () => {
 };
 
 const getTicketById = async (id) => {
-  var conn = await openConn();
+  let conn = await openConn();
   const query = `
     SELECT 
         support_ticket.id,
@@ -117,7 +117,7 @@ const getMessagesByTicket = async (id) => {
 };
 
 const addMessage = async (ticket_id, message, user_id) => {
-  var conn = await openConn();
+  let conn = await openConn();
   const query = `
     INSERT INTO support_message (ticket_id, from_user, body)
     VALUES (?, ?, ?)
@@ -151,7 +151,7 @@ const updateTicketStatus = async (id, status) => {
 };
 
 const getUserByLogin = async (login) => {
-  var conn = await openConn();
+  let conn = await openConn();
   const query = `
     SELECT id, email, admin, password
     FROM system_user
